@@ -13,7 +13,7 @@ const result = require('./routes/result.routes');
 
 
 app.use(cors({
-  origin: "http://localhost:5173"
+  origin: "http://localhost:5173", "https://digital-sakhi.netlify.app"
 }));
 
 
