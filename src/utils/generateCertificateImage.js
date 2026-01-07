@@ -52,15 +52,30 @@ async function generateCertificateImage({
     950
   );
 
-  const outputPath = path.join(
-    __dirname,
-    `../certificates/${certificateId}.png`
-  );
+const outputPath = path.join(
+  "/tmp",
+  `${certificateId}.png`
+);
 
-  const buffer = canvas.toBuffer("image/png");
-  fs.writeFileSync(outputPath, buffer);
+const buffer = canvas.toBuffer("image/png");
+fs.writeFileSync(outputPath, buffer);
 
-  return outputPath;
+return outputPath;
+
 }
 
 module.exports = generateCertificateImage;
+
+
+
+
+// const outputPath = path.join(
+//   "/tmp",
+//   `${certificateId}.png`
+// );
+
+// const buffer = canvas.toBuffer("image/png");
+// fs.writeFileSync(outputPath, buffer);
+
+// return outputPath;
+
