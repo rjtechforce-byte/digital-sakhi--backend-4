@@ -22,6 +22,14 @@ const createUser = async (req, res) => {
     
 
         const newUser = await User.create({ name, phone, email, address });
+        const { addRowToSheet } = require("../utils/googleSheet.helper");
+
+        await addRowToSheet({
+          name,
+          phone,
+          email,
+          address
+        });
 
         res.status(201).json({ message: 'उपयोगकर्ता का पंजीकरण सफलतापूर्वक पूरा हो गया है।', user: newUser });
     } catch (error) {
