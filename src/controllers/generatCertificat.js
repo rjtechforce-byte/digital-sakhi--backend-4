@@ -8,6 +8,8 @@ const Certificate = require("../modals/Certificate.modal");
 
 const generateCertificateImage = require("../utils/generateCertificateImage");
 
+const { addRowToSheet } = require("../utils/googleSheet.helper");
+
 const generateCertificate = async (req, res) => {
   try {
     const { userId, examId } = req.body;
@@ -16,20 +18,20 @@ const generateCertificate = async (req, res) => {
     if (!user) return res.status(404).json({ message: "User not found" });
 
     const result = await ExamResult.findOne({ userId, examId });
-    if (!result || result.result.toLowerCase() !== "pass") {
+    if (!result || result.result !== "pass") {
       return res.status(403).json({ message: "Not eligible" });
     }
 
     const existing = await Certificate.findOne({ userId, examId });
     if (existing) {
-      return res.json({
-        message: "Already generated",
+      return res.status(200).json({
+        success: true,
+        alreadyGenerated: true,
         certificateUrl: existing.certificateUrl,
       });
     }
 
-    const certificateId =
-      "DS-" + uuidv4().slice(0, 8).toUpperCase();
+    const certificateId = "DS-" + uuidv4().slice(0, 8).toUpperCase();
 
     const imagePath = await generateCertificateImage({
       name: user.name,
@@ -51,24 +53,32 @@ const generateCertificate = async (req, res) => {
       certificateId,
       certificateUrl: uploadRes.secure_url,
     });
-    await addRowToSheet({
-      name: user.name,
-      phone: user.phone,
-      email: user.email,
-      address: user.address,
-      score: result.score,
-      result: "pass",
-      certificateUrl: uploadRes.secure_url
-    });
 
-    res.status(201).json({
+    // 🔹 Google Sheet (SAFE)
+    try {
+      await addRowToSheet({
+        name: user.name,
+        phone: user.phone,
+        email: user.email,
+        address: user.address,
+        score: result.score,
+        result: "pass",
+        certificateUrl: uploadRes.secure_url,
+      });
+    } catch (sheetErr) {
+      console.error("Sheet update failed (certificate):", sheetErr.message);
+    }
+
+    return res.status(201).json({
+      success: true,
       message: "Certificate generated",
       certificateId,
       certificateUrl: uploadRes.secure_url,
     });
+
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Server error" });
+    console.error("certificate error:", err);
+    return res.status(500).json({ message: "Server error" });
   }
 };
 
