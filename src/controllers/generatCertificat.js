@@ -51,6 +51,15 @@ const generateCertificate = async (req, res) => {
       certificateId,
       certificateUrl: uploadRes.secure_url,
     });
+    await addRowToSheet({
+      name: user.name,
+      phone: user.phone,
+      email: user.email,
+      address: user.address,
+      score: result.score,
+      result: "pass",
+      certificateUrl: uploadRes.secure_url
+    });
 
     res.status(201).json({
       message: "Certificate generated",
