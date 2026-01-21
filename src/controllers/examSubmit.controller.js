@@ -73,6 +73,14 @@ const submitExam = async (req, res) => {
             remainindAttempts: (3 - user.examAttempts),
             id: examSubmit._id
         })
+        await addRowToSheet({
+          name: user.name,
+          phone: user.phone,
+          email: user.email,
+          address: user.address,
+          score,
+          result
+        });
 
        
     }  catch (error) {
