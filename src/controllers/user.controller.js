@@ -1,41 +1,67 @@
-const User = require('../modals/user.modal');
-// POST /api/users 
+const User = require("../modals/user.modal");
+const { addRowToSheet } = require("../utils/googleSheet.helper");
+
 
 const createUser = async (req, res) => {
-    try {
-        const { name, phone, email, address } = req.body;
-
-           const isUserExist = await User.findOne({phone});
-
-       if (isUserExist) {
-        return res.status(400).json({ message: 'सुरक्षा एवं पारदर्शिता के उद्देश्य से, प्रत्येक मोबाइल नंबर पर केवल एक ही उपयोगकर्ता का पंजीकरण मान्य है।' });
-       }
-
-        if (!name || !phone || !email || !address) {
-            return res.status(400).json({ message: 'कृपया आगे बढ़ने से पहले सभी आवश्यक जानकारी भरना सुनिश्चित करें।' });
-        }
-
-        if (phone.length !== 10) {
-            return res.status(400).json({ message: 'कृपया सुनिश्चित करें कि मोबाइल नंबर 10 अंकों का हो तथा उसमें किसी प्रकार का स्पेस न हो।' });
-        }
+  try {
+    const { name, phone, email, address } = req.body;
 
     
-
-        const newUser = await User.create({ name, phone, email, address });
-        const { addRowToSheet } = require("../utils/googleSheet.helper");
-
-        await addRowToSheet({
-          name,
-          phone,
-          email,
-          address
-        });
-
-        res.status(201).json({ message: 'उपयोगकर्ता का पंजीकरण सफलतापूर्वक पूरा हो गया है।', user: newUser });
-    } catch (error) {
-        res.status(500).json({ message: 'उपयोगकर्ता पंजीकरण के दौरान कोई त्रुटि हुई। कृपया पुनः प्रयास करें।', error });
+    if (!name || !phone || !email || !address) {
+      return res.status(400).json({
+        message: "कृपया आगे बढ़ने से पहले सभी आवश्यक जानकारी भरना सुनिश्चित करें।",
+      });
     }
-}
+
+    if (phone.length !== 10) {
+      return res.status(400).json({
+        message: "कृपया सुनिश्चित करें कि मोबाइल नंबर 10 अंकों का हो।",
+      });
+    }
+
+
+    const isUserExist = await User.findOne({ phone });
+    if (isUserExist) {
+      return res.status(400).json({
+        message:
+          "सुरक्षा एवं पारदर्शिता के उद्देश्य से, प्रत्येक मोबाइल नंबर पर केवल एक ही उपयोगकर्ता का पंजीकरण मान्य है।",
+      });
+    }
+
+    
+    const newUser = await User.create({
+      name,
+      phone,
+      email,
+      address,
+    });
+
+
+    try {
+      await addRowToSheet({
+        name,
+        phone,
+        email,
+        address,
+      });
+    } catch (sheetError) {
+      console.error("Google Sheet error (user saved in DB):", sheetError.message);
+    }
+
+    return res.status(201).json({
+      message: "उपयोगकर्ता का पंजीकरण सफलतापूर्वक पूरा हो गया है।",
+      user: newUser,
+    });
+
+  } catch (error) {
+    console.error("Create user error:", error);
+    return res.status(500).json({
+      message: "उपयोगकर्ता पंजीकरण के दौरान कोई त्रुटि हुई। कृपया पुनः प्रयास करें।",
+    });
+  }
+};
+
+
 
 async function loginUser (req, res) {
 
