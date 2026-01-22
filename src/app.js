@@ -15,8 +15,6 @@ const googleAuthRoutes = require("./routes/googleAuth.routes");
 
 
 const allowedOrigins = [
-  "https://digital-sakhi-20.netlify.app",
-  "https://digitalsakhi2-0-g31t.vercel.app",
   "https://digital-sakhi-2-1.vercel.app"
 ];
 
