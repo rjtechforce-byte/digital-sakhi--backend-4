@@ -9,6 +9,8 @@ const userRoutes = require('./routes/userRoute.routes');
 const examRoutes = require('./routes/exam.routes');
 const certificate = require('./routes/certifiecate.routes');
 const result = require('./routes/result.routes');
+const googleAuthRoutes = require("./routes/googleAuth.routes");
+
 
 
 
@@ -39,6 +41,7 @@ app.use('/api', examRoutes);
 app.use('/api/certificate', certificate);
 app.use('/api', result);
 
+app.use("/auth", googleAuthRoutes);
 
 
 module.exports = app;
