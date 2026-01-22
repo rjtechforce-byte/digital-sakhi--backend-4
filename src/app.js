@@ -15,7 +15,7 @@ const googleAuthRoutes = require("./routes/googleAuth.routes");
 
 
 app.use(cors({
-  origin: "https://digital-sakhi-20.netlify.app, https://digitalsakhi2-0-g31t.vercel.app/"
+  origin: "https://digital-sakhi-20.netlify.app, https://digitalsakhi2-0-g31t.vercel.app"
 }));
 
 
