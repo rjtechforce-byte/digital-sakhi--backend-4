@@ -14,9 +14,24 @@ const googleAuthRoutes = require("./routes/googleAuth.routes");
 
 
 
+const allowedOrigins = [
+  "https://digital-sakhi-20.netlify.app",
+  "https://digitalsakhi2-0-g31t.vercel.app",
+  "https://digital-sakhi-2-1.vercel.app"
+];
+
 app.use(cors({
-  origin: "https://digital-sakhi-20.netlify.app, https://digitalsakhi2-0-g31t.vercel.app, https://digital-sakhi-2-1.vercel.app"
+  origin: function (origin, callback) {
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true
 }));
+;
 
 
 // Connect to the databa
