@@ -49,20 +49,7 @@ const submitExam = async (req, res) => {
     exam.status = "submited";
     await exam.save();
 
-    // 🔹 Google Sheet (SAFE)
-    try {
-      await addRowToSheet({
-        name: user.name,
-        phone: user.phone,
-        email: user.email,
-        address: user.address,
-        score,
-        result,
-      });
-    } catch (sheetErr) {
-      console.error("Sheet update failed (exam submit):", sheetErr.message);
-    }
-
+    
     return res.status(200).json({
       success: true,
       message: "परीक्षा सफलतापूर्वक सबमिट हो गई है।",
