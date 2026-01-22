@@ -37,16 +37,7 @@ const createUser = async (req, res) => {
     });
 
 
-    try {
-      await addRowToSheet({
-        name,
-        phone,
-        email,
-        address,
-      });
-    } catch (sheetError) {
-      console.error("Google Sheet error (user saved in DB):", sheetError.message);
-    }
+
 
     return res.status(201).json({
       message: "उपयोगकर्ता का पंजीकरण सफलतापूर्वक पूरा हो गया है।",
