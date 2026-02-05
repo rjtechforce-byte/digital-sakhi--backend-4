@@ -15,7 +15,7 @@ const googleAuthRoutes = require("./routes/googleAuth.routes");
 
 
 const allowedOrigins = [
-  "https://digital-sakhi-2-1.vercel.app"
+  "https://www.digitalsakhichuru.in"
 ];
 
 app.use(cors({
