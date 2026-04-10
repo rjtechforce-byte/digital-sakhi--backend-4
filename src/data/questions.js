@@ -300,3 +300,7 @@ options: ["ग्राहक तक पहुँचना और बिक्�
 correctAnswer: 0
 }
 ];
+
+
+
+module.exports = questions;
