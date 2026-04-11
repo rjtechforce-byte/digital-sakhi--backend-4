@@ -22,8 +22,21 @@ const startExam = async (req, res) => {
         const runningExam = await Exam.findOne({ userId, status: 'running' });
 
         if (runningExam) {
-            return res.status(400).json({ message: 'An exam is already running for this user' });
-        }
+    const now = new Date();
+
+    // ⏳ 5 min extra grace time
+    const graceTime = 10 * 60 * 1000; // 10 minutes
+
+    if (runningExam.examEndTime.getTime() + graceTime < now.getTime()) {
+        // ✅ ab safe hai auto submit karna
+        runningExam.status = 'submited';
+        await runningExam.save();
+    } else {
+        return res.status(400).json({ message: 'An exam is already running for this user' });
+    }
+}
+
+        
 
         const examStartTime = new Date();
         const examEndTime = new Date(examStartTime.getTime() + 60 * 60 * 1000); // 1 hour later
