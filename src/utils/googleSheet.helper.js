@@ -27,6 +27,7 @@ async function addRowToSheet(row) {
           row.phone || "",
           row.email || "",
           row.address || "",
+          row.block || "",  
           row.score || "",
           row.result || "",
           row.certificateUrl || "",
