@@ -7,11 +7,11 @@ const createUser = async (req, res) => {
     const { name, phone, email, address } = req.body;
 
     
-    if (!name || !phone || !email || !address) {
-      return res.status(400).json({
-        message: "कृपया आगे बढ़ने से पहले सभी आवश्यक जानकारी भरना सुनिश्चित करें।",
-      });
-    }
+    if (!name || !phone || !email || !address || !block) {
+  return res.status(400).json({
+    message: "कृपया आगे बढ़ने से पहले सभी आवश्यक जानकारी भरना सुनिश्चित करें।",
+  });
+}
 
     if (phone.length !== 10) {
       return res.status(400).json({
@@ -29,13 +29,13 @@ const createUser = async (req, res) => {
     }
 
     
-    const newUser = await User.create({
-      name,
-      phone,
-      email,
-      address,
-    });
-
+  const newUser = await User.create({
+  name,
+  phone,
+  email,
+  address,
+  block,   //  ADD 
+});
 
 
 
