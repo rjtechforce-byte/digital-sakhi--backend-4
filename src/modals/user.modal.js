@@ -20,6 +20,10 @@ const userSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
+        block: {
+  type: String,
+  required: true
+},
         examGiven: {
             type: Boolean,
             default: false
