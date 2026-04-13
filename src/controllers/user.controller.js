@@ -78,7 +78,7 @@ async function loginUser (req, res) {
         phone: user.phone,
         name: user.name,
         address: user.address,
-        Block: user.block,
+        block: user.block,
         _id: user._id, 
     }
   });
