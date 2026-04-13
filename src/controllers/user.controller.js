@@ -4,7 +4,7 @@ const { addRowToSheet } = require("../utils/googleSheet.helper");
 
 const createUser = async (req, res) => {
   try {
-    const { name, phone, email, address } = req.body;
+    const { name, phone, email, address, block } = req.body;
 
     
     if (!name || !phone || !email || !address || !block) {
