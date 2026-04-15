@@ -61,6 +61,7 @@ const generateCertificate = async (req, res) => {
         phone: user.phone,
         email: user.email,
         address: user.address,
+        block: user.block,
         score: result.score,
         result: "pass",
         certificateUrl: uploadRes.secure_url,
