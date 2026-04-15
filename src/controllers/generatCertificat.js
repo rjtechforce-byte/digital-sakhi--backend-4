@@ -8,9 +8,7 @@ const Certificate = require("../modals/Certificate.modal");
 
 const generateCertificateImage = require("../utils/generateCertificateImage");
 
-const { addRowToSheet } = require("../utils/googleSheet.helper");
-
-const generateCertificate = async (req, res) => {
+const { upsertRowToSheet } = require("../utils/googleSheet.helper");
   try {
     const { userId, examId } = req.body;
 
@@ -54,21 +52,20 @@ const generateCertificate = async (req, res) => {
       certificateUrl: uploadRes.secure_url,
     });
 
-    // 🔹 Google Sheet (SAFE)
-    try {
-      await addRowToSheet({
-        name: user.name,
-        phone: user.phone,
-        email: user.email,
-        address: user.address,
-        block: user.block,
-        score: result.score,
-        result: "pass",
-        certificateUrl: uploadRes.secure_url,
-      });
-    } catch (sheetErr) {
-      console.error("Sheet update failed (certificate):", sheetErr.message);
-    }
+try {
+  await upsertRowToSheet({
+    name: user.name,
+    phone: user.phone,
+    email: user.email,
+    address: user.address,
+    block: user.block,
+    score: result.score,
+    result: "pass",
+    certificateUrl: uploadRes.secure_url,
+  });
+} catch (sheetErr) {
+  console.error("Sheet update failed (certificate):", sheetErr.message);
+}
 
     return res.status(201).json({
       success: true,
