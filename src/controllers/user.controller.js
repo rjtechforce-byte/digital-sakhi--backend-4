@@ -1,6 +1,5 @@
 const User = require("../modals/user.modal");
-const { addRowToSheet } = require("../utils/googleSheet.helper");
-
+const { upsertRowToSheet } = require("../utils/googleSheet.helper");
 
 const createUser = async (req, res) => {
   try {
@@ -51,7 +50,13 @@ const createUser = async (req, res) => {
     });
   }
 };
-
+await upsertRowToSheet({
+  name: newUser.name,
+  phone: newUser.phone,
+  email: newUser.email,
+  address: newUser.address,
+  block: newUser.block,
+});
 
 
 async function loginUser (req, res) {
