@@ -13,22 +13,18 @@ router.get("/google", (req, res) => {
   res.redirect(url);
 });
 
-// Step 2: Google callback
 router.get("/google/callback", async (req, res) => {
   const { code } = req.query;
 
   try {
     const { tokens } = await oauth2Client.getToken(code);
-    oauth2Client.setCredentials(tokens);
 
-    // TEMP: token in memory (production me file/db me save karna)
-    console.log("✅ Google OAuth connected");
+    console.log("🔥 REFRESH TOKEN:", tokens.refresh_token);
 
-    res.send("Google Sheets connected successfully. You can close this tab.");
+    res.send("Copy refresh_token from console");
   } catch (err) {
     console.error("OAuth error:", err);
     res.status(500).send("Google OAuth failed");
   }
 });
-
 module.exports = router;
