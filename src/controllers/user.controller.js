@@ -5,19 +5,17 @@ const createUser = async (req, res) => {
   try {
     const { name, phone, email, address, block } = req.body;
 
-    
     if (!name || !phone || !email || !address || !block) {
-  return res.status(400).json({
-    message: "कृपया आगे बढ़ने से पहले सभी आवश्यक जानकारी भरना सुनिश्चित करें।",
-  });
-}
+      return res.status(400).json({
+        message: "कृपया आगे बढ़ने से पहले सभी आवश्यक जानकारी भरना सुनिश्चित करें।",
+      });
+    }
 
     if (phone.length !== 10) {
       return res.status(400).json({
         message: "कृपया सुनिश्चित करें कि मोबाइल नंबर 10 अंकों का हो।",
       });
     }
-
 
     const isUserExist = await User.findOne({ phone });
     if (isUserExist) {
@@ -27,16 +25,26 @@ const createUser = async (req, res) => {
       });
     }
 
-    
-  const newUser = await User.create({
-  name,
-  phone,
-  email,
-  address,
-  block,   //  ADD 
-});
+    const newUser = await User.create({
+      name,
+      phone,
+      email,
+      address,
+      block,
+    });
 
-
+    // ✅ YAHI ADD KARNA HAI (correct place)
+    try {
+      await upsertRowToSheet({
+        name: newUser.name,
+        phone: newUser.phone,
+        email: newUser.email,
+        address: newUser.address,
+        block: newUser.block,
+      });
+    } catch (err) {
+      console.error("Sheet error:", err.message);
+    }
 
     return res.status(201).json({
       message: "उपयोगकर्ता का पंजीकरण सफलतापूर्वक पूरा हो गया है।",
@@ -50,14 +58,6 @@ const createUser = async (req, res) => {
     });
   }
 };
-await upsertRowToSheet({
-  name: newUser.name,
-  phone: newUser.phone,
-  email: newUser.email,
-  address: newUser.address,
-  block: newUser.block,
-});
-
 
 async function loginUser (req, res) {
 
