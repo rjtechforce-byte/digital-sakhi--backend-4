@@ -3,9 +3,9 @@ const { upsertRowToSheet } = require("../utils/googleSheet.helper");
 
 const createUser = async (req, res) => {
   try {
-    const { name, phone, email, address, block } = req.body;
+    const { name, phone, email,  block, address } = req.body;
 
-    if (!name || !phone || !email || !address || !block) {
+    if (!name || !phone || !email || !block || !address) {
       return res.status(400).json({
         message: "कृपया आगे बढ़ने से पहले सभी आवश्यक जानकारी भरना सुनिश्चित करें।",
       });
@@ -29,8 +29,8 @@ const createUser = async (req, res) => {
       name,
       phone,
       email,
-      address,
       block,
+      address,
     });
 
     // ✅ YAHI ADD KARNA HAI (correct place)
@@ -39,8 +39,9 @@ const createUser = async (req, res) => {
         name: newUser.name,
         phone: newUser.phone,
         email: newUser.email,
-        address: newUser.address,
         block: newUser.block,
+        address: newUser.address,
+        
       });
     } catch (err) {
       console.error("Sheet error:", err.message);
@@ -82,8 +83,8 @@ async function loginUser (req, res) {
     User: {
         phone: user.phone,
         name: user.name,
+      block: user.block,
         address: user.address,
-        block: user.block,
         _id: user._id, 
     }
   });
