@@ -17,14 +17,15 @@ const userSchema = new mongoose.Schema(
   required: true,
   unique: true ,
 },
-        address: {
-            type: String,
-            required: true,
-        },
         block: {
   type: String,
   required: true
 },
+        address: {
+            type: String,
+            required: true,
+        },
+        
         examGiven: {
             type: Boolean,
             default: false
