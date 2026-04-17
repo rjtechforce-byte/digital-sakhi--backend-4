@@ -1,6 +1,11 @@
-const { createCanvas, loadImage } = require("canvas");
+const { createCanvas, loadImage, registerFont } = require("canvas");
 const fs = require("fs");
 const path = require("path");
+
+registerFont(
+  "/usr/share/fonts/truetype/noto/NotoSansDevanagari-Regular.ttf",
+  { family: "UniversalFont" }
+);
 
 async function generateCertificateImage({
   name,
@@ -25,22 +30,22 @@ async function generateCertificateImage({
 
   // NAME (center, big)
   ctx.textAlign = "center";
-  ctx.font = "bold 50px Georgia";
+ctx.font = "bold 50px UniversalFont";
   ctx.fillText(name, width / 2, 500);
 
   // ADDRESS (left)
   ctx.textAlign = "left";
-  ctx.font = "28px Arial";
+  ctx.font = "28px UniversalFont";
   ctx.fillText(address, 360, 540);
 
   // SCORE (center)
   ctx.textAlign = "center";
-  ctx.font = "bold 32px Arial";
+  ctx.font = "bold 32px UniversalFont";
   ctx.fillText(score, width / 2 + 135, 615);
 
   // DATE (right)
   ctx.textAlign = "right";
-  ctx.font = "28px Arial";
+  ctx.font = "28px UniversalFont";
   ctx.fillText(date, width - 360, 577);
 
   // CERTIFICATE ID (bottom)
