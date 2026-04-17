@@ -1,11 +1,7 @@
-const { createCanvas, loadImage, registerFont } = require("canvas");
+const { createCanvas, loadImage  } = require("canvas");
 const fs = require("fs");
 const path = require("path");
 
-registerFont(
-  path.join(__dirname, "../assets/fonts/NotoSansDevanagari-Regular.ttf"),
-  { family: "UniversalFont" }
-);
 
 async function generateCertificateImage({
   name,
