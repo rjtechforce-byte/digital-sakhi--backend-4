@@ -30,22 +30,22 @@ async function generateCertificateImage({
 
   // NAME (center, big)
   ctx.textAlign = "center";
-ctx.font = "bold 50px UniversalFont";
+ctx.font = "bold 50px Georgia";
   ctx.fillText(name, width / 2, 500);
 
   // ADDRESS (left)
   ctx.textAlign = "left";
-  ctx.font = "28px UniversalFont";
+  ctx.font = "28px Arial";
   ctx.fillText(address, 360, 540);
 
   // SCORE (center)
   ctx.textAlign = "center";
-  ctx.font = "bold 32px UniversalFont";
+  ctx.font = "bold 32px Arial";
   ctx.fillText(score, width / 2 + 135, 615);
 
   // DATE (right)
   ctx.textAlign = "right";
-  ctx.font = "28px UniversalFont";
+  ctx.font = "28px Arial";
   ctx.fillText(date, width - 360, 577);
 
   // CERTIFICATE ID (bottom)
