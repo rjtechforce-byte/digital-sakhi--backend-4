@@ -3,7 +3,7 @@ const fs = require("fs");
 const path = require("path");
 
 registerFont(
- path.join(__dirname, "../assets/fonts/NotoSansDevanagari-Regular.ttf"),
+  path.join(__dirname, "../assets/fonts/NotoSansDevanagari-Regular.ttf"),
   { family: "UniversalFont" }
 );
 
