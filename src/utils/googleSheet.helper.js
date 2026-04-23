@@ -10,16 +10,14 @@ const SPREADSHEET_ID = process.env.GS_SHEET_ID;
 
 async function upsertRowToSheet(row) {
   try {
-    console.log("🔥 Sheet function called for:", row.email);
-
+    
     const res = await sheets.spreadsheets.values.get({
       spreadsheetId: SPREADSHEET_ID,
       range: "Sheet1!A:I",
     });
 
     const rows = res.data.values || [];
-    console.log("📊 Rows fetched:", rows.length);
-
+    
     const rowIndex = rows.findIndex(r => r[2] === row.email);
 
     const newRow = [
@@ -42,7 +40,7 @@ async function upsertRowToSheet(row) {
         requestBody: { values: [newRow] },
       });
 
-      console.log("✅ Sheet row updated");
+      
     } else {
       await sheets.spreadsheets.values.append({
         spreadsheetId: SPREADSHEET_ID,
@@ -51,7 +49,7 @@ async function upsertRowToSheet(row) {
         requestBody: { values: [newRow] },
       });
 
-      console.log("✅ New row added to sheet");
+      
     }
 
   } catch (err) {
