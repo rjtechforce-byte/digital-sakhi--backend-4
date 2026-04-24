@@ -7,7 +7,7 @@ const questions = require('../data/questions');
 const minScore = 14;
 
 
-const { upsertRowToSheet } = require("../utils/googleSheet.helper");
+
 const submitExam = async (req, res) => {
   try {
     const { userId, answers, examId } = req.body;
@@ -48,15 +48,7 @@ const submitExam = async (req, res) => {
     exam.status = "submited";
     await exam.save();
 
-    await upsertRowToSheet({
-  name: user.name,
-  phone: user.phone,
-  email: user.email,
-  address: user.address,
-  block: user.block,
-  score: score,
-  result: result,
-});
+
 
     
     return res.status(200).json({
