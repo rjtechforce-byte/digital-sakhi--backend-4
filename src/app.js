@@ -17,21 +17,22 @@ const allowedOrigins = [
   "https://www.digitalsakhichuru.in",
   "http://localhost:5173"
 ];
-];
 
 app.use(cors({
   origin: function (origin, callback) {
+
     if (!origin) return callback(null, true);
+
     if (allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
+      return callback(null, true);
     }
+
+    console.log("Blocked by CORS:", origin);
+
+    return callback(null, true); 
   },
   credentials: true
 }));
-;
-
 
 // Connect to the databa
 connectDB();
