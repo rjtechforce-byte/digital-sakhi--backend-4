@@ -51,6 +51,7 @@ app.use('/api', userRoutes);
 app.use('/api', examRoutes);
 app.use('/api/certificate', certificate);
 app.use('/api', result);
+app.use("/api", adminRoutes);
 
 
 
