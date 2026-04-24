@@ -1,5 +1,4 @@
 const User = require("../modals/user.modal");
-const { upsertRowToSheet } = require("../utils/googleSheet.helper");
 
 const createUser = async (req, res) => {
   try {
@@ -33,19 +32,7 @@ const createUser = async (req, res) => {
       address,
     });
 
-    // ✅ YAHI ADD KARNA HAI (correct place)
-    try {
-      await upsertRowToSheet({
-        name: newUser.name,
-        phone: newUser.phone,
-        email: newUser.email,
-        block: newUser.block,
-        address: newUser.address,
-        
-      });
-    } catch (err) {
-      console.error("Sheet error:", err.message);
-    }
+
 
     return res.status(201).json({
       message: "उपयोगकर्ता का पंजीकरण सफलतापूर्वक पूरा हो गया है।",
