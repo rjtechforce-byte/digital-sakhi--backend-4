@@ -4,13 +4,14 @@ const getAllUsersData = async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 100;
-
+const block = req.query.block;
     const skip = (page - 1) * limit;
 
-    const total = await User.countDocuments();
-
+    const total = await User.countDocuments(
+  block ? { block } : {}
+);
     const data = await User.aggregate([
-      {
+     ...(block ? [{ $match: { block } }] : []), {
         $lookup: {
           from: "examresults",
           localField: "_id",
