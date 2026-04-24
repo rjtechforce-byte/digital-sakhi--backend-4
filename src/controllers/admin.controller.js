@@ -65,5 +65,13 @@ const getAllUsersData = async (req, res) => {
     res.status(500).json({ message: "Error fetching data" });
   }
 };
+const getBlocks = async (req, res) => {
+  try {
+    const blocks = await User.distinct("block");
+    res.json(blocks);
+  } catch (err) {
+    res.status(500).json({ message: "Error fetching blocks" });
+  }
+};
 
-module.exports = { getAllUsersData };
+module.exports = { getAllUsersData, getBlocks };
