@@ -15,7 +15,7 @@ const adminRoutes = require("./routes/admin.routes");
 
 const allowedOrigins = [
   "https://www.digitalsakhichuru.in",
-  "http://localhost:5173"
+  "https://admin-of-digitalsakhi.vercel.app"
 ];
 
 app.use(cors({
