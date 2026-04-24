@@ -34,7 +34,7 @@ const getAllUsersData = async (req, res) => {
           address: 1,
           score: "$examData.score",
           result: "$examData.result",
-          attemptedExams: "$examData.attemptedExams",
+          attemptedExams: "examAttempts",
           certificateUrl: { $arrayElemAt: ["$certificateData.certificateUrl", 0] },
           createdAt: 1
         }
