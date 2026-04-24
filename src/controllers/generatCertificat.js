@@ -7,9 +7,7 @@ const ExamResult = require("../modals/ExmResult.modal");
 const Certificate = require("../modals/Certificate.modal");
 
 const generateCertificateImage = require("../utils/generateCertificateImage");
-const { upsertRowToSheet } = require("../utils/googleSheet.helper");
 
-// ✅ FUNCTION BANANA ZAROORI HAI
 const generateCertificate = async (req, res) => {
   try {
     const { userId, examId } = req.body;
@@ -53,22 +51,6 @@ const generateCertificate = async (req, res) => {
       certificateId,
       certificateUrl: uploadRes.secure_url,
     });
-
-    // ✅ SHEET UPDATE
-    try {
-      await upsertRowToSheet({
-        name: user.name,
-        phone: user.phone,
-        email: user.email,
-        address: user.address,
-        block: user.block,
-        score: result.score,
-        result: "pass",
-        certificateUrl: uploadRes.secure_url,
-      });
-    } catch (sheetErr) {
-      console.error("Sheet update failed (certificate):", sheetErr.message);
-    }
 
     return res.status(201).json({
       success: true,
