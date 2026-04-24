@@ -9,6 +9,7 @@ const userRoutes = require('./routes/userRoute.routes');
 const examRoutes = require('./routes/exam.routes');
 const certificate = require('./routes/certifiecate.routes');
 const result = require('./routes/result.routes');
+const adminRoutes = require("./routes/admin.routes");
 
 
 
